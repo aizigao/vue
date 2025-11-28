@@ -236,6 +236,25 @@ impl zed::Extension for VueExtension {
         }
     }
 
+    fn language_server_workspace_configuration(
+        &mut self,
+        _language_server_id: &zed::LanguageServerId,
+        worktree: &zed::Worktree,
+    ) -> Result<Option<serde_json::Value>> {
+        let settings = LspSettings::for_worktree("vue", worktree)
+            .ok()
+            .and_then(|settings| settings.settings)
+            .unwrap_or_else(|| {
+                json!({
+                    "vue.inlayHints.inlineHandlerLeading": false,
+                    "vue.inlayHints.missingProps": false,
+                    "vue.inlayHints.optionsWrapper": false,
+                    "vue.inlayHints.vBindShorthand": false,
+                })
+            });
+        Ok(Some(settings))
+    }
+
     fn label_for_completion(
         &self,
         _language_server_id: &zed::LanguageServerId,
