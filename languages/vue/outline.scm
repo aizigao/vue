@@ -3,43 +3,44 @@
 (comment) @annotation
 
 ; ========== template =========
-(template_element
-  (start_tag
-    (tag_name) @name
-    (attribute
-      (attribute_name) @_lang
-      (quoted_attribute_value (attribute_value) @annotation))?)
-  (#eq? @_lang "lang")) @item
+; (template_element
+;   (start_tag
+;     (tag_name) @name
+;     (attribute (attribute_name) @attr_name (quoted_attribute_value (attribute_value) @attr_value))*
+;   )
+; ) @item
 
-; Custom elements/components (PascalCase or hyphenated) - self-closing tags
-(
-  (element
-    (self_closing_tag
-      (tag_name) @name))
-  (#match? @name "^[A-Z]|-")
+(template_element
+  (start_tag) @name
+  (attribute (attribute_name) @attr_name (quoted_attribute_value (attribute_value) @attr_value))*
 ) @item
 
-; normal tags
+
+; Custom elements/components (PascalCase or hyphenated) - self-closing tags
 (element
-  (start_tag
-    (tag_name) @name)) @item
+    (start_tag) @name
+) @item
+
+
+(element
+    (self_closing_tag) @name
+) @item
+
 
 ; ======= script ======
 
 (script_element
-  (start_tag
-    (tag_name) @name
-    (attribute
-      (attribute_name) @_lang
-      (quoted_attribute_value (attribute_value) @annotation))?)
-  (#eq? @_lang "lang")) @item
+    (start_tag) @name
+    (raw_text) @context @item
+)
+
+(script_element
+    (end_tag) @name @item
+)
 
 
 ; ========= style =========
 (style_element
-  (start_tag
-    (tag_name) @name
-    (attribute
-      (attribute_name) @_lang
-      (quoted_attribute_value (attribute_value) @annotation))?)
-  (#eq? @_lang "lang")) @item
+    (start_tag) @name
+    (raw_text) @context
+) @item
