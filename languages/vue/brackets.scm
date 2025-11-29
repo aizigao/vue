@@ -1,6 +1,7 @@
-("<" @open ">" @close)
-("\"" @open "\"" @close)
-("<" @open "/>" @close)
-("</" @open ">" @close)
+(("<" @open ">" @close) (#set! rainbow.exclude))
+(("\"" @open "\"" @close) (#set! rainbow.exclude))
+(("<" @open "/>" @close) (#set! rainbow.exclude))
+(("</" @open ">" @close) (#set! rainbow.exclude))
 
-((element (start_tag) @open [(end_tag) (erroneous_end_tag)] @close) (#set! newline.only))
+
+((element (start_tag) @open [(end_tag) (erroneous_end_tag)] @close) (#set! newline.only) (#set! rainbow.exclude))
